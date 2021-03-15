@@ -1,4 +1,4 @@
-import 'package:app4/src/pages/colores_page.dart';
+import 'package:app4/src/pages/usuario_persona_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
 import 'package:app4/src/pages/ventas_page.dart';
@@ -37,9 +37,10 @@ class _MenuWidgetState extends State<MenuWidget> with TickerProviderStateMixin {
           page: CategoriaPage(),
         ),
         KFDrawerItem.initWithPage(
-          text: Text('Colores', style: TextStyle(color: Colors.white)),
+          text:
+              Text('UsuarioPersonaPage', style: TextStyle(color: Colors.white)),
           icon: Icon(Icons.home, color: Colors.white),
-          page: ColoresPage(),
+          page: UsuarioPersonaPage(),
         ),
         KFDrawerItem.initWithPage(
           text: Text('Productos', style: TextStyle(color: Colors.white)),

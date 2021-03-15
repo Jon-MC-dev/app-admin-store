@@ -22,7 +22,7 @@ class PersonaUsuario implements ModelAbs {
   }
 }
 
-class ColorDataSource extends RecursosDatos {
+class PersonaUsuarioDataSource extends RecursosDatos {
   @override
   Object getValue(ModelAbs model, String nombreColumna) {
     PersonaUsuario perUser = model; // bajar hasta el hijo

@@ -26,10 +26,10 @@ class PersonaUsuarioProvider extends ProviderAbs {
 
   @override
   Future<List<ModelAbs>> getData({ModelAbs model}) async {
-    List<Persona> personList = await persona.getData(
+    List<ModelAbs> personList = await persona.getData(
         model:
             Persona(id: model.id)); // primero se traeran los datos de persona
-    List<Usuario> userList =
+    List<ModelAbs> userList =
         await persona.getData(model: Usuario(id: model.id));
 
     List<PersonaUsuario> personsUsers = [];
