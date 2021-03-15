@@ -1,4 +1,5 @@
 import 'package:app4/src/controllers/color_controller.dart';
+import 'package:app4/src/forms/colores_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kf_drawer/kf_drawer.dart';
@@ -48,7 +49,7 @@ class _ColoresPage extends State<ColoresPage> {
         }
       },
       nombreTabla: 'Colores',
-      form: Text("Hola we"),
+      form: FormColores(),
       widgetMenuKFDrawer: widget,
       controller: c,
       namesColumns: [
