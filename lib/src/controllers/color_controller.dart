@@ -15,7 +15,9 @@ class ColorController extends AbstractController {
   ModelAbs objModel = new Categoria();
 
   @override
-  Future<bool> addData() async {}
+  Future<bool> addData() async {
+    return false;
+  }
 
   @override
   deteleData() async {}
