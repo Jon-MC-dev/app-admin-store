@@ -30,7 +30,7 @@ class PersonaUsuarioProvider extends ProviderAbs {
         model:
             Persona(id: model.id)); // primero se traeran los datos de persona
     List<ModelAbs> userList =
-        await persona.getData(model: Usuario(id: model.id));
+        await usuario.getData(model: Usuario(id: model.id));
 
     List<PersonaUsuario> personsUsers = [];
     for (var i = 0; i < personList.length; i++) {

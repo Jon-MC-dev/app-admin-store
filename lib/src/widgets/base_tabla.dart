@@ -11,6 +11,7 @@ class BaseTabla extends StatelessWidget {
   Widget form; // FormMarca
   String nombreTabla;
   Function celdasSyle;
+  ColumnWidthMode modoColumna;
   List<Map<String, dynamic>> namesColumns;
   var widgetMenuKFDrawer;
   BaseTabla(
@@ -19,7 +20,8 @@ class BaseTabla extends StatelessWidget {
       this.nombreTabla,
       this.namesColumns,
       this.widgetMenuKFDrawer,
-      this.celdasSyle});
+      this.celdasSyle,
+      this.modoColumna = ColumnWidthMode.fill});
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +56,9 @@ class BaseTabla extends StatelessWidget {
                                       .modelDataSource
                                       .setlista(asyncSnapshot.data);
                                   return SfDataGrid(
+                                    columnSizer: ColumnSizer(),
+                                    columnWidthMode: modoColumna,
                                     source: this.controller.modelDataSource,
-                                    columnWidthMode: ColumnWidthMode.fill,
                                     onQueryCellStyle:
                                         (QueryCellStyleArgs args) {
                                       if (celdasSyle != null) {

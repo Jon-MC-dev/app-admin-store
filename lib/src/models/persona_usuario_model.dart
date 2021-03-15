@@ -48,7 +48,7 @@ class PersonaUsuarioDataSource extends RecursosDatos {
       case 'pass':
         return perUser.usuario.contrasena;
         break;
-      case 'contra':
+      case 'permisos':
         return perUser.usuario.permisos;
         break;
     }

@@ -7,8 +7,7 @@ class Usuario implements ModelAbs {
   int id;
   int get getID => id;
 
-  String usuario, contrasena;
-  Map<String, dynamic> permisos;
+  String usuario, contrasena, permisos;
 
   Usuario({this.id, this.usuario, this.contrasena, this.permisos});
 
