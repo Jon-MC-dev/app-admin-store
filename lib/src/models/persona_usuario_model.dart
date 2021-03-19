@@ -14,7 +14,12 @@ class PersonaUsuario implements ModelAbs {
   PersonaUsuario({this.id, this.persona, this.usuario});
 
   @override
-  deJsonAObj(Map<String, dynamic> json) {}
+  deJsonAObj(Map<String, dynamic> json) {
+    PersonaUsuario perUser = new PersonaUsuario();
+    perUser.persona = this.persona.deJsonAObj(json);
+    perUser.usuario = this.usuario.deJsonAObj(json);
+    return perUser;
+  }
 
   @override
   Map<String, dynamic> getDataJson() {

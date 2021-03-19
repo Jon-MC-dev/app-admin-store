@@ -36,6 +36,7 @@ dependencies:
   fluttertoast: ^7.1.8
   ansicolor: ^1.1.1
   flutter_colorpicker: ^0.3.5
+  custom_switch: ^0.0.1
 
 
 dev_dependencies:

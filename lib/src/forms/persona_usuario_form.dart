@@ -1,4 +1,5 @@
 import 'package:app4/src/controllers/usuario_persona_controller.dart';
+import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
@@ -21,12 +22,12 @@ class FormPersonaUsuario extends StatelessWidget {
           ),
           CampoTexto(
             label: 'Apellido Paterno',
-            controllerText: c.controllersInputs['apellidoP'],
+            controllerText: c.controllersInputs['apellido_paterno'],
             validador: c.reglas1,
           ),
           CampoTexto(
             label: 'Apellido Materno',
-            controllerText: c.controllersInputs['apellidoM'],
+            controllerText: c.controllersInputs['apellido_materno'],
             validador: c.reglas1,
           ),
           Row(
@@ -34,7 +35,7 @@ class FormPersonaUsuario extends StatelessWidget {
               Flexible(
                 child: CampoTexto(
                   label: 'Fecha Nacimiento',
-                  controllerText: c.controllersInputs['fechaNac'],
+                  controllerText: c.controllersInputs['fechaNaci'],
                   validador: c.seleccionFecha,
                   tipo: TextInputType.datetime,
                   funcion: () {
@@ -104,6 +105,15 @@ class FormPersonaUsuario extends StatelessWidget {
               validador: c.reglaContrasena,
             );
           }),
+          Row(
+            children: [
+              CustomSwitch(
+                activeColor: Color(0xFF008065),
+                value: false,
+                onChanged: (value) {},
+              ),
+            ],
+          ),
           SizedBox(
             height: 20.0,
           ),
@@ -125,7 +135,7 @@ class FormPersonaUsuario extends StatelessWidget {
       firstDate: DateTime(1990),
       lastDate: DateTime(2025),
     );
-    TextEditingController fechInput = c.controllersInputs['fechaNac'];
+    TextEditingController fechInput = c.controllersInputs['fechaNaci'];
     if (picked != null) {
       fechInput.text = "${picked.toLocal()}".split(' ')[0];
     }

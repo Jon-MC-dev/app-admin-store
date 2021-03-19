@@ -1,8 +1,11 @@
 import 'package:app4/src/controllers/abstracts/abstrac_controller.dart';
 import 'package:app4/src/models/abstracts/abstrac_model.dart';
+import 'package:app4/src/models/persona_model.dart';
 import 'package:app4/src/models/persona_usuario_model.dart';
+import 'package:app4/src/models/usuario_model.dart';
 import 'package:app4/src/providers/abstracts/abstract_providers.dart';
 import 'package:app4/src/providers/usuario_persona_providers.dart';
+import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,10 +26,25 @@ class UsuarioPersonaController extends AbstractController {
     Icons.remove_red_eye,
     color: Color(0xFF008065),
   ).obs;
+  List<Column> customsSwitchs = <Column>[];
+  List<String> nombresSwitchs = [
+    'Total',
+    'Marcas',
+    'Categoria',
+    'Productos',
+    'Usuarios',
+    'Ventas',
+    'Adquisiciones'
+  ];
 
   @override
   Future<bool> addData() async {
-    return false;
+    PersonaUsuario objMod =
+        PersonaUsuario(persona: new Persona(), usuario: new Usuario());
+    objMod = objMod.deJsonAObj(getAllValues());
+    print(objMod.persona.getDataJson());
+    print(objMod.usuario.getDataJson());
+    return modelProvider.addData(objMod);
   }
 
   @override
@@ -47,10 +65,10 @@ class UsuarioPersonaController extends AbstractController {
   @override
   void onInit() {
     this.controllersInputs['nombre'] = new TextEditingController();
-    this.controllersInputs['apellidoP'] = new TextEditingController();
-    this.controllersInputs['apellidoM'] = new TextEditingController();
-    this.controllersInputs['fechaNac'] = new TextEditingController();
-    this.controllersInputs['sexo'] = new TextEditingController();
+    this.controllersInputs['apellido_paterno'] = new TextEditingController();
+    this.controllersInputs['apellido_materno'] = new TextEditingController();
+    this.controllersInputs['fechaNaci'] = new TextEditingController();
+    //this.controllersInputs['sexo'] = new TextEditingController();
     this.controllersInputs['usuario'] = new TextEditingController();
     this.controllersInputs['contrasena'] = new TextEditingController();
 
@@ -83,6 +101,19 @@ class UsuarioPersonaController extends AbstractController {
           color: Color(0xFF008065),
         );
       }
+    });
+
+    nombresSwitchs.forEach((element) {
+      customsSwitchs.add(Column(
+        children: [
+          CustomSwitch(
+            activeColor: Color(0xFF008065),
+            value: false,
+            onChanged: (value) {},
+          ),
+          Text(element)
+        ],
+      ));
     });
 
     super.onInit();

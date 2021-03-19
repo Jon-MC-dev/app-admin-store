@@ -16,7 +16,7 @@ class PersonaUsuarioProvider extends ProviderAbs {
   }
   @override
   Future<bool> addData(ModelAbs model) async {
-    return true;
+    return false;
   }
 
   @override

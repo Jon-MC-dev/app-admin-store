@@ -32,8 +32,10 @@ abstract class AbstractController extends GetxController {
   deteleData();
 
   validarOnSubmit() async {
-    if (funcionExtraEnValidando()) {
-      if (formKey.currentState.validate()) {
+    bool validacionPropia = funcionExtraEnValidando();
+    bool validacionForKey = formKey.currentState.validate();
+    if (validacionPropia) {
+      if (validacionForKey) {
         print("accion");
         print(accion);
         if (await this.accion()) {
@@ -97,6 +99,17 @@ abstract class AbstractController extends GetxController {
         backgroundColor: Colors.blue,
         textColor: Colors.white,
         fontSize: 16.0);
+  }
+
+  Map<String, String> getAllValues() {
+    Map<String, String> retorno = {};
+    if (controllersInputs != null) {
+      Iterable<dynamic> listaKeys = controllersInputs.keys;
+      for (var item in listaKeys) {
+        retorno[item] = controllersInputs[item].text.toString();
+      }
+    }
+    return retorno;
   }
 
   @override
