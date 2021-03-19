@@ -18,6 +18,11 @@ class UsuarioPersonaController extends AbstractController {
 
   RxString seleccion = 'Seleccionar'.obs;
   RxString msSexo = ''.obs;
+  RxBool textoOculto = true.obs;
+  Rx<Icon> iconoOjo = Icon(
+    Icons.remove_red_eye,
+    color: Color(0xFF008065),
+  ).obs;
 
   @override
   Future<bool> addData() async {
@@ -65,6 +70,20 @@ class UsuarioPersonaController extends AbstractController {
         return true;
       }
     };
+
+    textoOculto.listen((bool visibilidad) {
+      if (!visibilidad) {
+        iconoOjo.value = Icon(
+          Icons.remove_red_eye_outlined,
+          color: Color(0xFF008065),
+        );
+      } else {
+        iconoOjo.value = Icon(
+          Icons.remove_red_eye,
+          color: Color(0xFF008065),
+        );
+      }
+    });
 
     super.onInit();
   }

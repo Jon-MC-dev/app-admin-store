@@ -91,11 +91,19 @@ class FormPersonaUsuario extends StatelessWidget {
             controllerText: c.controllersInputs['usuario'],
             validador: c.reglas1,
           ),
-          CampoTexto(
-            label: 'Contraseña',
-            controllerText: c.controllersInputs['contrasena'],
-            validador: c.reglaContrasena,
-          ),
+          Obx(() {
+            return CampoTexto(
+              suffixIcon: IconButton(
+                  icon: c.iconoOjo.value,
+                  onPressed: () {
+                    c.textoOculto.value = !c.textoOculto.value;
+                  }),
+              textoOculto: c.textoOculto.value,
+              label: 'Contraseña',
+              controllerText: c.controllersInputs['contrasena'],
+              validador: c.reglaContrasena,
+            );
+          }),
           SizedBox(
             height: 20.0,
           ),
@@ -118,6 +126,8 @@ class FormPersonaUsuario extends StatelessWidget {
       lastDate: DateTime(2025),
     );
     TextEditingController fechInput = c.controllersInputs['fechaNac'];
-    fechInput.text = "${picked.toLocal()}".split(' ')[0];
+    if (picked != null) {
+      fechInput.text = "${picked.toLocal()}".split(' ')[0];
+    }
   }
 }

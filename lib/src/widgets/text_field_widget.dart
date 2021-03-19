@@ -7,13 +7,17 @@ class CampoTexto extends StatelessWidget {
   TextInputType tipo;
   Function funcion;
   String textoInicial;
+  bool textoOculto;
+  Widget suffixIcon;
   CampoTexto(
       {this.label,
       this.controllerText,
       this.validador,
       this.tipo = TextInputType.text,
       this.funcion,
-      this.textoInicial});
+      this.textoInicial,
+      this.textoOculto = false,
+      this.suffixIcon});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -23,8 +27,10 @@ class CampoTexto extends StatelessWidget {
       controller: this.controllerText,
       cursorColor: Color(0xFF008065),
       maxLength: 25,
+      obscureText: this.textoOculto,
       validator: this.validador,
       decoration: InputDecoration(
+          suffixIcon: this.suffixIcon,
           labelText: this.label,
           labelStyle: TextStyle(
             color: Color(0xFF008065),
