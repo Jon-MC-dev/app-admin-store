@@ -13,7 +13,11 @@ class UsuarioPersonaController extends AbstractController {
   RecursosDatos modelDataSource = PersonaUsuarioDataSource();
   @override
   ModelAbs objModel = new PersonaUsuario();
+  @override
+  Function funcionExtraEnValidando;
+
   RxString seleccion = 'Seleccionar'.obs;
+  RxString msSexo = ''.obs;
 
   @override
   Future<bool> addData() async {
@@ -30,16 +34,6 @@ class UsuarioPersonaController extends AbstractController {
     return list.cast<PersonaUsuario>();
   }
 
-  String reglas1(String valor) {
-    v.listaReglas.clear();
-    v.listaReglas.add(v.esVacio(valor, "El campo esta vacio"));
-    v.listaReglas.add(v.valorMinimo(valor, "El texto es muy corto", 2));
-    v.listaReglas
-        .add(v.soloLetrasConEspacios(valor, "Solo puede haber letras"));
-
-    return v.evaluarReglas();
-  }
-
   @override
   Future<bool> saveChanges() async {
     return true;
@@ -54,6 +48,50 @@ class UsuarioPersonaController extends AbstractController {
     this.controllersInputs['sexo'] = new TextEditingController();
     this.controllersInputs['usuario'] = new TextEditingController();
     this.controllersInputs['contrasena'] = new TextEditingController();
+
+    seleccion.listen((String val) {
+      print("El valor de Seleccion[$val]");
+      if (seleccion.value == "Seleccionar") {
+        msSexo.value = "Seleccionar sexo";
+      } else {
+        msSexo.value = "";
+      }
+    });
+    funcionExtraEnValidando = () {
+      if (seleccion.value == "Seleccionar") {
+        msSexo.value = "Seleccionar sexo";
+        return false;
+      } else {
+        return true;
+      }
+    };
+
     super.onInit();
+  }
+
+  String reglas1(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "El campo esta vacio"));
+    v.listaReglas.add(v.valorMinimo(valor, "El texto es muy corto", 2));
+    v.listaReglas
+        .add(v.soloLetrasConEspacios(valor, "Solo puede haber letras"));
+
+    return v.evaluarReglas();
+  }
+
+  String seleccionFecha(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "Seleccione una fecha"));
+    return v.evaluarReglas();
+  }
+
+  String reglaContrasena(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "La contraseña es requerida"));
+    v.listaReglas.add(v.valorMinimo(valor, "Minimo 8 caracteres", 8));
+    v.listaReglas.add(v.soloLetrasNumerosEspacios(
+        valor, "Solo puede haber letras y numeros"));
+
+    return v.evaluarReglas();
   }
 }

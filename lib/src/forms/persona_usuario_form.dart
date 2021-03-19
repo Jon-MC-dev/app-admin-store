@@ -35,6 +35,7 @@ class FormPersonaUsuario extends StatelessWidget {
                 child: CampoTexto(
                   label: 'Fecha Nacimiento',
                   controllerText: c.controllersInputs['fechaNac'],
+                  validador: c.seleccionFecha,
                   tipo: TextInputType.datetime,
                   funcion: () {
                     _selectDate(context);
@@ -43,33 +44,46 @@ class FormPersonaUsuario extends StatelessWidget {
               ),
               SizedBox(
                 width: 10.0,
-               ),
-              Expanded(child: Obx(() {
-                return DropdownButton<String>(
-                  value: 'Seleccionar',
-                  isExpanded: true,
-                  icon: Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  elevation: 25,
-                  style: TextStyle(color: Color(0xFF008065)),
-                  underline: Container(
-                    height: 2,
-                    color: Color(0xFF008065),
-                  ),
-                  onChanged: (String newValue) {},
-                  items: <String>[
-                    'Seleccionar',
-                    'Mujer',
-                    'Hombre',
-                    'Prefiero no decirlo'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
+              ),
+              Expanded(
+                  child: Column(
+                children: [
+                  Obx(() {
+                    return DropdownButton<String>(
+                      value: c.seleccion.value,
+                      isExpanded: true,
+                      icon: Icon(Icons.arrow_downward),
+                      iconSize: 24,
+                      elevation: 25,
+                      style: TextStyle(color: Color(0xFF008065)),
+                      underline: Container(
+                        height: 2,
+                        color: Color(0xFF008065),
+                      ),
+                      onChanged: (String newValue) {
+                        c.seleccion.value = newValue;
+                      },
+                      items: <String>[
+                        'Seleccionar',
+                        'Mujer',
+                        'Hombre',
+                        'Prefiero no decirlo'
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     );
-                  }).toList(),
-                );
-              })),
+                  }),
+                  Obx(() {
+                    return Text(
+                      c.msSexo.value,
+                      style: TextStyle(color: Colors.red, fontSize: 10),
+                    );
+                  })
+                ],
+              )),
             ],
           ),
           CampoTexto(
@@ -80,6 +94,7 @@ class FormPersonaUsuario extends StatelessWidget {
           CampoTexto(
             label: 'Contraseña',
             controllerText: c.controllersInputs['contrasena'],
+            validador: c.reglaContrasena,
           ),
           SizedBox(
             height: 20.0,

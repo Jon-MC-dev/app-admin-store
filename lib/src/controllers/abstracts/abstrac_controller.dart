@@ -18,6 +18,10 @@ abstract class AbstractController extends GetxController {
   RecursosDatos modelDataSource;
   BuildContext context;
   Validador v = new Validador();
+  Function funcionExtraEnValidado;
+  Function funcionExtraEnValidando = () {
+    return true;
+  };
 
   Future<List<ModelAbs>> getData({id});
 
@@ -28,39 +32,45 @@ abstract class AbstractController extends GetxController {
   deteleData();
 
   validarOnSubmit() async {
-    if (formKey.currentState.validate()) {
-      print("accion");
-      print(accion);
-      if (await this.accion()) {
-        getData().then((value) {
-          modelDataSource.lista = value;
+    if (funcionExtraEnValidando()) {
+      if (formKey.currentState.validate()) {
+        print("accion");
+        print(accion);
+        if (await this.accion()) {
+          getData().then((value) {
+            modelDataSource.lista = value;
+            Fluttertoast.showToast(
+                msg: "La operación se realizó con éxito",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.blue,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            print("modelDataSource.updateDataGridSource(); ");
+            modelDataSource.updateDataGridSource();
+            pen
+              ..black()
+              ..green();
+            print(pen(
+                "modelDataSource.runtimeType: ${modelDataSource.runtimeType}"));
+            Navigator.pop(context);
+            if (funcionExtraEnValidado == null) {
+              return true;
+            } else {
+              return funcionExtraEnValidado();
+            }
+          });
+        } else {
           Fluttertoast.showToast(
-              msg: "La operación se realizó con éxito",
+              msg: "Ocurrió un error",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.blue,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
-          print("modelDataSource.updateDataGridSource(); ");
-          modelDataSource.updateDataGridSource();
-          pen
-            ..black()
-            ..green();
-          print(pen(
-              "modelDataSource.runtimeType: ${modelDataSource.runtimeType}"));
-          Navigator.pop(context);
-          return true;
-        });
-      } else {
-        Fluttertoast.showToast(
-            msg: "Ocurrió un error",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        }
       }
     }
 
