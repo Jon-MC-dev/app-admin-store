@@ -11,27 +11,25 @@ class EdicionPagina extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: Container(
-              child: Column(children: [
-            //IconoMenu(widgetMenu: widget),
-            Row(children: [
-              IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })
-            ]),
-            TituloWidget(
-              texto: "${editar ? "Editar" : "Agregar"} ${this.pagina}",
-            ),
+        body: Container(
+            child: ListView(children: [
+          //IconoMenu(widgetMenu: widget),
+          Row(children: [
+            IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ]),
+          TituloWidget(
+            texto: "${editar ? "Editar" : "Agregar"} ${this.pagina}",
+          ),
 
-            Container(
-                padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
-                //color: Colors.redAccent,
-                child: this.formulario)
-          ])),
-        ),
+          Container(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, top: 30.0),
+              //color: Colors.redAccent,
+              child: this.formulario)
+        ])),
       ),
     );
   }

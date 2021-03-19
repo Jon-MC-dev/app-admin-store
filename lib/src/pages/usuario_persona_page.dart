@@ -1,4 +1,5 @@
 import 'package:app4/src/controllers/usuario_persona_controller.dart';
+import 'package:app4/src/forms/persona_usuario_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kf_drawer/kf_drawer.dart';
@@ -17,7 +18,7 @@ class _UsuarioPersonaPagePage extends State<UsuarioPersonaPage> {
   Widget build(BuildContext context) {
     return BaseTabla(
       nombreTabla: 'Personas',
-      form: Text("Usuario persona form"),
+      form: FormPersonaUsuario(),
       widgetMenuKFDrawer: widget,
       controller: c,
       modoColumna: ColumnWidthMode.none,

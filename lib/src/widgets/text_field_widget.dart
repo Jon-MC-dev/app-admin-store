@@ -4,10 +4,22 @@ class CampoTexto extends StatelessWidget {
   TextEditingController controllerText;
   Function validador;
   String label;
-  CampoTexto({this.label, this.controllerText, this.validador});
+  TextInputType tipo;
+  Function funcion;
+  String textoInicial;
+  CampoTexto(
+      {this.label,
+      this.controllerText,
+      this.validador,
+      this.tipo = TextInputType.text,
+      this.funcion,
+      this.textoInicial});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: this.funcion,
+      keyboardType: this.tipo,
+      initialValue: this.textoInicial,
       controller: this.controllerText,
       cursorColor: Color(0xFF008065),
       maxLength: 25,
