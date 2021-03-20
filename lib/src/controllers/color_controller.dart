@@ -38,4 +38,9 @@ class ColorController extends AbstractController {
     this.controllersInputs['categoriaNombre'] = new TextEditingController();
     super.onInit();
   }
+
+  @override
+  void cleanForm() {
+    // TODO: implement cleanForm
+  }
 }

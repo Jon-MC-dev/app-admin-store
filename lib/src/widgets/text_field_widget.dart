@@ -8,6 +8,7 @@ class CampoTexto extends StatelessWidget {
   Function funcion;
   String textoInicial;
   bool textoOculto;
+  bool habilitado;
   Widget suffixIcon;
   CampoTexto(
       {this.label,
@@ -16,6 +17,7 @@ class CampoTexto extends StatelessWidget {
       this.tipo = TextInputType.text,
       this.funcion,
       this.textoInicial,
+      this.habilitado = true,
       this.textoOculto = false,
       this.suffixIcon});
   @override
@@ -25,6 +27,7 @@ class CampoTexto extends StatelessWidget {
       keyboardType: this.tipo,
       initialValue: this.textoInicial,
       controller: this.controllerText,
+      enabled: this.habilitado,
       cursorColor: Color(0xFF008065),
       maxLength: 25,
       obscureText: this.textoOculto,

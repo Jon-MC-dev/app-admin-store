@@ -61,4 +61,15 @@ class ProviderConcret implements ProviderAbs {
     }
     return false;
   }
+
+  @override
+  String campo;
+
+  @override
+  String tbl;
+
+  @override
+  Future<int> getMaxID() async {
+    return 0;
+  }
 }

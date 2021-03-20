@@ -112,6 +112,20 @@ abstract class AbstractController extends GetxController {
     return retorno;
   }
 
+  void resetInputs({Function funcionExtra}) {
+    if (controllersInputs != null) {
+      Iterable<dynamic> listaKeys = controllersInputs.keys;
+      for (var item in listaKeys) {
+        controllersInputs[item].text = '';
+      }
+    }
+    if (funcionExtra != null) {
+      funcionExtra();
+    }
+  }
+
+  void cleanForm();
+
   @override
   void onInit() {
     Random random = new Random();

@@ -1,4 +1,5 @@
 import 'package:app4/src/controllers/usuario_persona_controller.dart';
+import 'package:app4/src/widgets/swith_personalizado.dart';
 import 'package:custom_switch/custom_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
@@ -11,6 +12,17 @@ class FormPersonaUsuario extends StatelessWidget {
   Widget build(BuildContext context) {
     print("FormCategoria: accion");
     print("${c.accion}");
+    if (c.accion == c.saveChanges) {
+      c.getDataEdit();
+    }
+    c.rxbMarcas.value = false;
+    c.rxbCategoria.value = false;
+    c.rxbProductos.value = false;
+    c.rxbUsuarios.value = false;
+    c.rxbVentas.value = false;
+    c.rxbAdquisiciones.value = false;
+
+    c.cleanForm();
     return Form(
       key: c.formKey,
       child: Column(
@@ -35,6 +47,7 @@ class FormPersonaUsuario extends StatelessWidget {
               Flexible(
                 child: CampoTexto(
                   label: 'Fecha Nacimiento',
+                  //habilitado: false,
                   controllerText: c.controllersInputs['fechaNaci'],
                   validador: c.seleccionFecha,
                   tipo: TextInputType.datetime,
@@ -105,13 +118,43 @@ class FormPersonaUsuario extends StatelessWidget {
               validador: c.reglaContrasena,
             );
           }),
-          Row(
+          Column(
             children: [
-              CustomSwitch(
-                activeColor: Color(0xFF008065),
-                value: false,
-                onChanged: (value) {},
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Obx(() {
+                    return _switchPersonalizados(
+                        texto: c.strMarcas, valor: c.rxbMarcas);
+                  }),
+                  Obx(() {
+                    print("Ha cambiado 2");
+                    return _switchPersonalizados(
+                        texto: c.strCategoria, valor: c.rxbCategoria);
+                  }),
+                  Obx(() {
+                    return _switchPersonalizados(
+                        texto: c.strProductos, valor: c.rxbProductos);
+                  })
+                ],
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Obx(() {
+                    return _switchPersonalizados(
+                        texto: c.strUsuarios, valor: c.rxbUsuarios);
+                  }),
+                  Obx(() {
+                    return _switchPersonalizados(
+                        texto: c.strVentas, valor: c.rxbVentas);
+                  }),
+                  Obx(() {
+                    return _switchPersonalizados(
+                        texto: c.strAdquisiciones, valor: c.rxbAdquisiciones);
+                  })
+                ],
+              )
             ],
           ),
           SizedBox(
@@ -139,5 +182,20 @@ class FormPersonaUsuario extends StatelessWidget {
     if (picked != null) {
       fechInput.text = "${picked.toLocal()}".split(' ')[0];
     }
+  }
+
+  Widget _switchPersonalizados({String texto, RxBool valor}) {
+    return Column(
+      children: [
+        Switch(
+          activeColor: Color(0xFF008065),
+          value: valor.value,
+          onChanged: (value) {
+            valor.value = value;
+          },
+        ),
+        Text(texto)
+      ],
+    );
   }
 }
