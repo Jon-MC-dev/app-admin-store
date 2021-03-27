@@ -1,11 +1,11 @@
-import 'package:app4/src/pages/usuario_persona_page.dart';
+import 'package:app4/src/pages/tablas/usuario_persona_page.dart';
 import 'package:flutter/material.dart';
 import 'package:kf_drawer/kf_drawer.dart';
-import 'package:app4/src/pages/ventas_page.dart';
-import 'package:app4/src/pages/productos_page.dart';
+import 'package:app4/src/pages/tablas/ventas_page.dart';
+import 'package:app4/src/pages/tablas/productos_page.dart';
 import 'package:app4/src/pages/principal_page.dart';
-import 'package:app4/src/pages/marcas_page.dart';
-import 'package:app4/src/pages/categoria_page.dart';
+import 'package:app4/src/pages/tablas/marcas_page.dart';
+import 'package:app4/src/pages/tablas/categoria_page.dart';
 
 class MenuWidget extends StatefulWidget {
   @override
@@ -37,8 +37,7 @@ class _MenuWidgetState extends State<MenuWidget> with TickerProviderStateMixin {
           page: CategoriaPage(),
         ),
         KFDrawerItem.initWithPage(
-          text:
-              Text('UsuarioPersonaPage', style: TextStyle(color: Colors.white)),
+          text: Text('Usuarios', style: TextStyle(color: Colors.white)),
           icon: Icon(Icons.home, color: Colors.white),
           page: UsuarioPersonaPage(),
         ),

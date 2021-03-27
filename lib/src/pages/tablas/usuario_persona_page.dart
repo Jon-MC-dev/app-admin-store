@@ -17,7 +17,7 @@ class _UsuarioPersonaPagePage extends State<UsuarioPersonaPage> {
   @override
   Widget build(BuildContext context) {
     return BaseTabla(
-      nombreTabla: 'Personas',
+      nombreTabla: 'Usuarios',
       form: FormPersonaUsuario(),
       widgetMenuKFDrawer: widget,
       controller: c,
