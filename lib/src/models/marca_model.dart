@@ -9,7 +9,7 @@ class Marca implements ModelAbs {
 
   String nombre;
 
-  Marca({this.id, this.nombre});
+  Marca({this.id, this.nombre = ''});
 
   @override
   Map<String, dynamic> getDataJson() {

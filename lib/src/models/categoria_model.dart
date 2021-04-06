@@ -7,7 +7,7 @@ class Categoria extends ModelAbs {
 
   String nombre;
 
-  Categoria({this.id, this.nombre});
+  Categoria({this.id, this.nombre = ''});
 
   @override
   Map<String, dynamic> getDataJson() {
