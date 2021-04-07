@@ -59,7 +59,6 @@ class Detalle {
   Detalle(this.caracteristica, this.descripcion);
   String caracteristica;
   String descripcion;
-  Widget botones;
 }
 
 class DetalleDataSource extends DataGridSource<Detalle> {
@@ -80,9 +79,6 @@ class DetalleDataSource extends DataGridSource<Detalle> {
         break;
       case 'descripcion':
         return detalle.descripcion;
-        break;
-      case 'botones':
-        return detalle.botones;
         break;
     }
   }
