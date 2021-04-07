@@ -123,7 +123,11 @@ class FormProducto extends StatelessWidget {
           ),
           CampoTexto(
             label: 'Codigo barras',
-            suffixIcon: Icon(Icons.camera),
+            controllerText: c.controllersInputs['codigoBarras'],
+            suffixIcon: IconButton(
+              onPressed: c.scanBarcodeNormal,
+              icon: Icon(Icons.camera),
+            ),
           ),
           Row(
             children: [

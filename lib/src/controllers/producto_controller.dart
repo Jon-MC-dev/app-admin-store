@@ -10,6 +10,8 @@ import 'package:app4/src/providers/abstracts/abstract_providers.dart';
 import 'package:app4/src/widgets/tabla_detalles.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
 
 class ProductoController extends AbstractController {
@@ -128,6 +130,19 @@ class ProductoController extends AbstractController {
     }
   }
 
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+    print(barcodeScanRes);
+    controllersInputs['codigoBarras'].text = barcodeScanRes;
+  }
+
   @override
   void onInit() {
     MarcasProvider().getData(model: Marca()..id = 0).then((value) {
@@ -136,6 +151,8 @@ class ProductoController extends AbstractController {
     CategoriaProvider().getData(model: Categoria()..id = 0).then((value) {
       this.listaCategorias.assignAll(value.cast<Categoria>());
     });
+    this.controllersInputs['codigoBarras'] = new TextEditingController();
+
     super.onInit();
   }
 }

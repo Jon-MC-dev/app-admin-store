@@ -10,7 +10,7 @@ import 'package:app4/src/providers/abstracts/abstract_providers.dart';
 AnsiPen pen = new AnsiPen()..white(bold: true);
 
 abstract class AbstractController extends GetxController {
-  Map<dynamic, dynamic> controllersInputs = {};
+  Map<String, TextEditingController> controllersInputs = {};
   ProviderAbs modelProvider;
   final formKey = GlobalKey<FormState>();
   ModelAbs objModel;
