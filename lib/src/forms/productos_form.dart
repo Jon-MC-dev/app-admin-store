@@ -1,4 +1,5 @@
 import 'package:app4/src/controllers/producto_controller.dart';
+import 'package:app4/src/widgets/tabla_detalles.dart';
 import 'package:flutter/material.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
 import 'package:get/get.dart';
@@ -95,12 +96,56 @@ class FormProducto extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
+          Row(
+            children: [
+              Expanded(
+                child: CampoTexto(
+                  label: 'Modelo',
+                ),
+              ),
+              SizedBox(
+                width: 10.0,
+              ),
+              Expanded(
+                child: CampoTexto(
+                  label: 'Precio',
+                ),
+              )
+            ],
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          CampoTexto(
+            label: 'Descripcion',
+            maxLines: 3,
+            maxLength: 250,
+          ),
+          CampoTexto(
+            label: 'Codigo barras',
+            suffixIcon: Icon(Icons.camera),
+          ),
+          Row(
+            children: [
+              Text("Detalles adicionales "),
+              IconButton(
+                  icon: Icon(Icons.loupe_rounded), onPressed: c.openDetalle)
+            ],
+          ),
+          Obx(() => TablaDetalles(
+                detalles: c.listaDetalles,
+                detalleDataSource: c.detalleDataSource,
+                openEdit: c.openDetalle,
+              )),
           RaisedButton(
             onPressed: c.validarOnSubmit,
             child: Text("Guardar Producto"),
             color: Colors.green,
             textColor: Colors.white,
-          )
+          ),
+          SizedBox(
+            height: 25.0,
+          ),
         ],
       ),
     );

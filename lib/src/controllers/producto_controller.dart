@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app4/src/models/categoria_model.dart';
 import 'package:app4/src/models/marca_model.dart';
 import 'package:app4/src/models/producto_model.dart';
@@ -7,6 +9,9 @@ import 'package:app4/src/providers/producto_providers.dart';
 import 'package:app4/src/controllers/abstracts/abstrac_controller.dart';
 import 'package:app4/src/models/abstracts/abstrac_model.dart';
 import 'package:app4/src/providers/abstracts/abstract_providers.dart';
+import 'package:app4/src/widgets/tabla_detalles.dart';
+import 'package:app4/src/widgets/text_field_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductoController extends AbstractController {
@@ -22,6 +27,9 @@ class ProductoController extends AbstractController {
 
   RxString valorCategoria = 'Categoria 1'.obs;
   RxString valorMarca = 'Marca 1'.obs;
+
+  RxList<Detalle> listaDetalles = <Detalle>[].obs;
+  DetalleDataSource detalleDataSource = DetalleDataSource();
 
   @override
   Future<bool> addData() async {
@@ -53,6 +61,73 @@ class ProductoController extends AbstractController {
 
   void onChangeSelectMarca(dynamic value) {
     print(value);
+  }
+
+  TextEditingController caracteristica = new TextEditingController();
+  TextEditingController descripcion = new TextEditingController();
+  void openDetalle({bool modoEdicion = false, int index}) {
+    if (modoEdicion) {
+      caracteristica.text = listaDetalles[index].caracteristica;
+      descripcion.text = listaDetalles[index].descripcion;
+    }
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Detalles'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                CampoTexto(
+                  label: 'Caracteristica',
+                  controllerText: caracteristica,
+                ),
+                CampoTexto(
+                  label: 'Descripcion',
+                  controllerText: descripcion,
+                  maxLength: 50,
+                  maxLines: 2,
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Canselar'),
+              color: Colors.red[400],
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              textColor: Colors.white,
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Aceptar'),
+              color: Colors.blue[400],
+              textColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              onPressed: () {
+                this.addDetalle(edicion: modoEdicion, index: index);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void addDetalle({bool edicion, int index}) {
+    if (!edicion) {
+      if (descripcion.text != '' && caracteristica.text != '') {
+        listaDetalles.add(Detalle(caracteristica.text, descripcion.text));
+      }
+    } else {
+      listaDetalles[index] = Detalle(caracteristica.text, descripcion.text);
+    }
   }
 
   @override

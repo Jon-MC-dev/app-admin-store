@@ -10,6 +10,8 @@ class CampoTexto extends StatelessWidget {
   bool textoOculto;
   bool habilitado;
   Widget suffixIcon;
+  int maxLines;
+  int maxLength;
   CampoTexto(
       {this.label,
       this.controllerText,
@@ -19,6 +21,8 @@ class CampoTexto extends StatelessWidget {
       this.textoInicial,
       this.habilitado = true,
       this.textoOculto = false,
+      this.maxLines = 1,
+      this.maxLength = 25,
       this.suffixIcon});
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,8 @@ class CampoTexto extends StatelessWidget {
       controller: this.controllerText,
       enabled: this.habilitado,
       cursorColor: Color(0xFF008065),
-      maxLength: 25,
+      maxLength: maxLength,
+      maxLines: maxLines,
       obscureText: this.textoOculto,
       validator: this.validador,
       decoration: InputDecoration(
