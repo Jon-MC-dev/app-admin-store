@@ -1,7 +1,9 @@
 import 'package:app4/src/controllers/producto_controller.dart';
+import 'package:app4/src/widgets/list_view_fotos.dart';
 import 'package:app4/src/widgets/tabla_detalles.dart';
 import 'package:flutter/material.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -17,9 +19,6 @@ class FormProducto extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CampoTexto(
-            label: 'Producto',
-          ),
           Row(
             children: [
               Expanded(
@@ -96,11 +95,15 @@ class FormProducto extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
+          CampoTexto(
+            label: 'Modelo',
+          ),
           Row(
             children: [
               Expanded(
                 child: CampoTexto(
-                  label: 'Modelo',
+                  label: 'Existencias',
+                  maxLength: 3,
                 ),
               ),
               SizedBox(
@@ -109,6 +112,7 @@ class FormProducto extends StatelessWidget {
               Expanded(
                 child: CampoTexto(
                   label: 'Precio',
+                  maxLength: 5,
                 ),
               )
             ],
@@ -141,6 +145,10 @@ class FormProducto extends StatelessWidget {
                 detalleDataSource: c.detalleDataSource,
                 openEdit: c.openDetalle,
               )),
+          ListFotos(),
+          SizedBox(
+            height: 25.0,
+          ),
           RaisedButton(
             onPressed: c.validarOnSubmit,
             child: Text("Guardar Producto"),
