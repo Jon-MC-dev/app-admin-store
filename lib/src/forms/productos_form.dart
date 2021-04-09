@@ -3,7 +3,6 @@ import 'package:app4/src/widgets/list_view_fotos.dart';
 import 'package:app4/src/widgets/tabla_detalles.dart';
 import 'package:flutter/material.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -23,7 +22,7 @@ class FormProducto extends StatelessWidget {
             children: [
               Expanded(
                 child: Obx(() {
-                  if (c.listaCategorias.isNotEmpty) {
+                  if (c.listaCategorias.isNotEmpty && cats.isEmpty) {
                     c.listaCategorias.forEach((element) {
                       cats.add(DropdownMenuItem(
                         child: Text(element.nombre),
@@ -59,7 +58,7 @@ class FormProducto extends StatelessWidget {
               ),
               Expanded(
                 child: Obx(() {
-                  if (c.listaMarcas.isNotEmpty) {
+                  if (c.listaMarcas.isNotEmpty && mars.isEmpty) {
                     c.listaMarcas.forEach((element) {
                       mars.add(DropdownMenuItem(
                         child: Text(element.nombre),
@@ -81,7 +80,6 @@ class FormProducto extends StatelessWidget {
                                 style: BorderStyle.solid,
                                 width: 1.0,
                               ),
-                              //borderRadius: BorderRadius.circular(25.0),
                             ),
                           ),
                           hint: "Selecciona la marca",

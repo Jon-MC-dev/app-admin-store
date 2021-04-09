@@ -146,9 +146,11 @@ class ProductoController extends AbstractController {
   @override
   void onInit() {
     MarcasProvider().getData(model: Marca()..id = 0).then((value) {
+      this.listaMarcas.clear();
       this.listaMarcas.assignAll(value.cast<Marca>());
     });
     CategoriaProvider().getData(model: Categoria()..id = 0).then((value) {
+      this.listaCategorias.clear();
       this.listaCategorias.assignAll(value.cast<Categoria>());
     });
     this.controllersInputs['codigoBarras'] = new TextEditingController();
