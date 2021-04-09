@@ -51,11 +51,6 @@ abstract class AbstractController extends GetxController {
                 fontSize: 16.0);
             print("modelDataSource.updateDataGridSource(); ");
             modelDataSource.updateDataGridSource();
-            pen
-              ..black()
-              ..green();
-            print(pen(
-                "modelDataSource.runtimeType: ${modelDataSource.runtimeType}"));
             Navigator.pop(context);
             if (funcionExtraEnValidado == null) {
               return true;

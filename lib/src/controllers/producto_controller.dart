@@ -25,14 +25,26 @@ class ProductoController extends AbstractController {
   RxList<Marca> listaMarcas = <Marca>[].obs;
   RxList<Categoria> listaCategorias = <Categoria>[].obs;
 
-  RxString valorCategoria = 'Categoria 1'.obs;
-  RxString valorMarca = 'Marca 1'.obs;
+  int valorCategoria = 0;
+  int valorMarca = 0;
 
   RxList<Detalle> listaDetalles = <Detalle>[].obs;
   DetalleDataSource detalleDataSource = DetalleDataSource();
 
   @override
   Future<bool> addData() async {
+    print(this.getAllValues());
+    Producto objMod = new Producto();
+    objMod = objMod.deJsonAObj(this.getAllValues(), conIds: false);
+    objMod.categoria.id = valorCategoria;
+    objMod.marca.id = valorMarca;
+    Map<String, String> detalles = {};
+    if (listaDetalles.isNotEmpty) {
+      for (var item in listaDetalles) {
+        detalles[item.caracteristica] = item.descripcion;
+      }
+    }
+    objMod.detallesAdicionales = detalles.toString();
     return false;
   }
 
@@ -56,11 +68,11 @@ class ProductoController extends AbstractController {
   void cleanForm() {}
 
   void onChangeSelectCategoria(dynamic value) {
-    print(value);
+    valorCategoria = value;
   }
 
   void onChangeSelectMarca(dynamic value) {
-    print(value);
+    valorMarca = value;
   }
 
   TextEditingController caracteristica = new TextEditingController();
@@ -136,11 +148,34 @@ class ProductoController extends AbstractController {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           "#ff6666", "Cancel", true, ScanMode.BARCODE);
       print(barcodeScanRes);
+      controllersInputs['codigo_barras'].text = barcodeScanRes;
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
     }
-    print(barcodeScanRes);
-    controllersInputs['codigoBarras'].text = barcodeScanRes;
+  }
+
+  String reglaModelo(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "Introduce un modelo"));
+    v.listaReglas.add(v.valorMinimo(valor, "Minimo 3 caracteres", 3));
+    v.listaReglas.add(v.soloLetrasNumerosEspacios(
+        valor, "Solo puede haber letras y numeros"));
+    return v.evaluarReglas();
+  }
+
+  String existencias(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "Introduce el numero de existencias"));
+    v.listaReglas.add(v.soloNumeros(valor, "Solo puede numeros enteros"));
+    return v.evaluarReglas();
+  }
+
+  String precio(String valor) {
+    v.listaReglas.clear();
+    v.listaReglas.add(v.esVacio(valor, "Introduce el precio"));
+    v.listaReglas
+        .add(v.soloNumerosConDecimal(valor, "Solo puede haber numeros"));
+    return v.evaluarReglas();
   }
 
   @override
@@ -153,8 +188,25 @@ class ProductoController extends AbstractController {
       this.listaCategorias.clear();
       this.listaCategorias.assignAll(value.cast<Categoria>());
     });
-    this.controllersInputs['codigoBarras'] = new TextEditingController();
+    this.controllersInputs['codigo_barras'] = new TextEditingController();
+    this.controllersInputs['modelo'] = new TextEditingController();
+    this.controllersInputs['existencias'] = new TextEditingController();
+    this.controllersInputs['precio'] = new TextEditingController();
+    this.controllersInputs['descripcion'] = new TextEditingController();
 
+    funcionExtraEnValidando = () {
+      if (valorCategoria == 0) {
+        messageError('Selecciona una categoria');
+        return false;
+      } else {
+        if (valorMarca == 0) {
+          messageError('Selecciona una marca');
+          return false;
+        } else {
+          return true;
+        }
+      }
+    };
     super.onInit();
   }
 }

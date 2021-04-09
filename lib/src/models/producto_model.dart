@@ -37,19 +37,30 @@ class Producto extends ModelAbs {
   }
 
   @override
-  deJsonAObj(Map<String, dynamic> json) {
+  deJsonAObj(Map<String, dynamic> json, {conIds = true}) {
     print("${json['id_categoria']} + ${json['modelo']}");
     Producto producto = Producto();
     producto.id = json["id_producto"];
-    getObjCategoria(json).then((value) {
-      producto.categoria = value;
-    });
-    getObjMarca(json).then((value) {
-      producto.marca = value;
-    });
+    if (conIds) {
+      getObjCategoria(json).then((value) {
+        producto.categoria = value;
+      });
+      getObjMarca(json).then((value) {
+        producto.marca = value;
+      });
+    } else {
+      producto.categoria = new Categoria();
+      producto.marca = new Marca();
+    }
+
     producto.modelo = json["modelo"];
-    producto.existencias = json["existencias"];
-    producto.precio = json["precio"];
+    producto.existencias = json["existencias"].runtimeType == int
+        ? json["existencias"]
+        : int.parse(json["existencias"]);
+    producto.precio = json["precio"].runtimeType == double ||
+            json["precio"].runtimeType == int
+        ? json["precio"]
+        : double.parse(json["precio"]);
     producto.descripcion = json["descripcion"];
     producto.codigoBarras = json["codigo_barras"];
     producto.detallesAdicionales = json["detalles_adicionales"];

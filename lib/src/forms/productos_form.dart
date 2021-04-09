@@ -45,7 +45,7 @@ class FormProducto extends StatelessWidget {
                               //borderRadius: BorderRadius.circular(25.0),
                             ),
                           ),
-                          value: c.valorCategoria.value,
+                          //value: c.valorCategoria.value,
                           onChanged: c.onChangeSelectCategoria,
                           hint: "Selecciona la categoria",
                           searchHint: "Selecciona una categoria",
@@ -70,7 +70,7 @@ class FormProducto extends StatelessWidget {
                       ? Text("Cargando")
                       : SearchableDropdown.single(
                           items: mars,
-                          value: c.valorMarca.value,
+                          //value: c.valorMarca.value,
                           onChanged: c.onChangeSelectMarca,
                           underline: Container(
                             height: 1.0,
@@ -95,13 +95,17 @@ class FormProducto extends StatelessWidget {
           ),
           CampoTexto(
             label: 'Modelo',
+            controllerText: c.controllersInputs['modelo'],
+            validador: c.reglaModelo,
           ),
           Row(
             children: [
               Expanded(
                 child: CampoTexto(
                   label: 'Existencias',
-                  maxLength: 3,
+                  maxLength: 4,
+                  controllerText: c.controllersInputs['existencias'],
+                  validador: c.existencias,
                 ),
               ),
               SizedBox(
@@ -111,6 +115,8 @@ class FormProducto extends StatelessWidget {
                 child: CampoTexto(
                   label: 'Precio',
                   maxLength: 5,
+                  controllerText: c.controllersInputs['precio'],
+                  validador: c.precio,
                 ),
               )
             ],
@@ -122,10 +128,11 @@ class FormProducto extends StatelessWidget {
             label: 'Descripcion',
             maxLines: 3,
             maxLength: 250,
+            controllerText: c.controllersInputs['descripcion'],
           ),
           CampoTexto(
             label: 'Codigo barras',
-            controllerText: c.controllersInputs['codigoBarras'],
+            controllerText: c.controllersInputs['codigo_barras'],
             suffixIcon: IconButton(
               onPressed: c.scanBarcodeNormal,
               icon: Icon(Icons.camera),

@@ -33,6 +33,24 @@ class Validador {
     return null;
   }
 
+  String soloNumerosEnteros(String valor, String mensaje) {
+    try {
+      int.parse(valor);
+    } on FormatException {
+      return mensaje;
+    }
+    return null;
+  }
+
+  String soloNumerosConDecimal(String valor, String mensaje) {
+    try {
+      double.parse(valor);
+    } on FormatException {
+      return mensaje;
+    }
+    return null;
+  }
+
   String soloLetrasSinEspacios(String valor, String mensaje) {
     RegExp regExp = new RegExp(r'^[a-zA-Z]+$');
     if (!regExp.hasMatch(valor)) {
