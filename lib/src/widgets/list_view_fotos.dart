@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:app4/src/providers/color_providers.dart';
 import 'package:app4/src/models/color_model.dart' as C;
+import 'package:app4/src/widgets/color_predominante.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -14,7 +15,7 @@ class ListFotos extends StatelessWidget {
   RxInt _radioValue = 0.obs;
 
   final List<DropdownMenuItem> colores = [];
-  Color pickerColor = Colors.black;
+  Rx<Color> pickerColor = (Colors.black).obs;
   final picker = ImagePicker();
 
   ListFotos() {
@@ -65,7 +66,10 @@ class ListFotos extends StatelessWidget {
     Widget targeta;
     Rx<Icon> icono;
     Rx<FileImage> imagenFile = FileImage(File('null')).obs;
-    icono = Icon(Icons.color_lens).obs;
+    icono = Icon(
+      Icons.color_lens,
+      size: 30.0,
+    ).obs;
     targeta = Obx(() {
       return Container(
         decoration: BoxDecoration(
@@ -98,7 +102,7 @@ class ListFotos extends StatelessWidget {
                   IconButton(
                       icon: icono.value,
                       onPressed: () {
-                        showColorPiker(context, icono);
+                        showColorPiker(context, icono, imagenFile.value);
                       }),
                   IconButton(
                     icon: Icon(
@@ -120,7 +124,14 @@ class ListFotos extends StatelessWidget {
     _listaFotos.add(targeta);
   }
 
-  void showColorPiker(BuildContext context, Rx<Icon> icono) {
+  void showColorPiker(
+      BuildContext context, Rx<Icon> icono, ImageProvider<Object> imagen) {
+    Widget colorPredominante = ColorPredominante(
+      imajen: imagen,
+      onChange: (Color color) {
+        pickerColor.value = color;
+      },
+    );
     showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -169,18 +180,25 @@ class ListFotos extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.w300),
-                                    )
+                                    ),
                                   ],
-                                )
+                                ),
+                                colorPredominante,
+                                Container(
+                                  margin: EdgeInsets.all(25.0),
+                                  width: 50,
+                                  height: 50,
+                                  color: pickerColor.value,
+                                ),
                               ],
                             ),
                           ),
                           ColorPicker(
-                            pickerColor: pickerColor,
+                            pickerColor: pickerColor.value,
                             showLabel: true,
                             pickerAreaHeightPercent: 0.8,
                             onColorChanged: (Color value) {
-                              pickerColor = value;
+                              pickerColor.value = value;
                             },
                           )
                         ],
@@ -236,7 +254,8 @@ class ListFotos extends StatelessWidget {
                   print("Hola WE");
                   icono.value = Icon(
                     Icons.color_lens,
-                    color: pickerColor,
+                    color: pickerColor.value,
+                    size: 30.0,
                   );
                   print(pickerColor.value);
                 }
