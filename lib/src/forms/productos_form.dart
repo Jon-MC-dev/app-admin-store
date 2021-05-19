@@ -150,7 +150,9 @@ class FormProducto extends StatelessWidget {
                 detalleDataSource: c.detalleDataSource,
                 openEdit: c.openDetalle,
               )),
-          ListFotos(),
+          ListFotos(
+            listaImajenes: c.listaImajenes,
+          ),
           SizedBox(
             height: 25.0,
           ),

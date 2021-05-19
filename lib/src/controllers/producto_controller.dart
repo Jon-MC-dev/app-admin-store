@@ -30,6 +30,7 @@ class ProductoController extends AbstractController {
 
   RxList<Detalle> listaDetalles = <Detalle>[].obs;
   DetalleDataSource detalleDataSource = DetalleDataSource();
+  List<Rx<FileImage>> listaImajenes = <Rx<FileImage>>[];
 
   @override
   Future<bool> addData() async {
@@ -44,6 +45,8 @@ class ProductoController extends AbstractController {
         detalles[item.caracteristica] = item.descripcion;
       }
     }
+    print("listaImajenes, contenemos ${listaImajenes.length}");
+    print("Detalles: $detalles");
     objMod.detallesAdicionales = detalles.toString();
     return false;
   }

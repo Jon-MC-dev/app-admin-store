@@ -4,6 +4,7 @@ import 'package:app4/src/providers/color_providers.dart';
 import 'package:app4/src/models/color_model.dart' as C;
 import 'package:app4/src/widgets/color_predominante.dart';
 import 'package:app4/src/widgets/text_field_widget.dart';
+import 'package:app4/src/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
@@ -11,14 +12,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
 class ListFotos extends StatelessWidget {
-  RxList _listaFotos = <Widget>[].obs;
+  RxList _listaTargetas = <Widget>[].obs;
   RxInt _radioValue = 0.obs;
 
   final List<DropdownMenuItem> colores = [];
   Rx<Color> pickerColor = (Colors.black).obs;
   final picker = ImagePicker();
+  List<Rx<FileImage>> listaImajenes;
 
-  ListFotos() {
+  ListFotos({this.listaImajenes}) {
     print("Re Echo");
 
     ColorProvider().getData(model: C.Color()..id = 0).then((lista) {
@@ -36,7 +38,7 @@ class ListFotos extends StatelessWidget {
     return Obx(() {
       return Container(
         //color: Colors.blue[300],
-        height: _listaFotos.isEmpty ? 50 : Get.height * 0.28,
+        height: _listaTargetas.isEmpty ? 50 : Get.height * 0.28,
         child: Column(
           children: [
             Row(
@@ -53,7 +55,7 @@ class ListFotos extends StatelessWidget {
               child: Obx(() {
                 return ListView(
                     scrollDirection: Axis.horizontal,
-                    children: _listaFotos.toList());
+                    children: _listaTargetas.toList());
               }),
             ),
           ],
@@ -65,17 +67,28 @@ class ListFotos extends StatelessWidget {
   void addTargeta(BuildContext context) {
     Widget targeta;
     Rx<Icon> icono;
-    Rx<FileImage> imagenFile = FileImage(File('null')).obs;
+    //Rx<Icon> iconoColores;
+    //Rx<FileImage> imagenFile = FileImage(File('null')).obs;
+    Rx<FileImage> imagenFile = Rx<FileImage>();
     icono = Icon(
       Icons.color_lens,
       size: 30.0,
     ).obs;
+    Function funcion = () {
+      ToastW.messageError("Seleccione una fotografia");
+    };
+    //iconoColores =
     targeta = Obx(() {
+      if (imagenFile.value != null && imagenFile.value.file != null) {
+        funcion = () {
+          showColorPiker(context, icono, imagenFile.value);
+        };
+      }
       return Container(
         decoration: BoxDecoration(
             color: Colors.blueGrey[100],
             borderRadius: BorderRadius.circular(30),
-            image: imagenFile.value.file != null
+            image: imagenFile.value != null && imagenFile.value.file != null
                 ? DecorationImage(image: imagenFile.value, fit: BoxFit.cover)
                 : null),
         margin: EdgeInsets.only(right: 15.0),
@@ -99,11 +112,7 @@ class ListFotos extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                      icon: icono.value,
-                      onPressed: () {
-                        showColorPiker(context, icono, imagenFile.value);
-                      }),
+                  IconButton(icon: icono.value, onPressed: funcion),
                   IconButton(
                     icon: Icon(
                       Icons.close_rounded,
@@ -111,7 +120,8 @@ class ListFotos extends StatelessWidget {
                     ),
                     onPressed: () {
                       print("Removeremos la targeta");
-                      _listaFotos.remove(targeta);
+                      _listaTargetas.remove(targeta);
+                      listaImajenes.remove(imagenFile.value);
                     },
                   ),
                 ],
@@ -121,7 +131,8 @@ class ListFotos extends StatelessWidget {
         ),
       );
     });
-    _listaFotos.add(targeta);
+    _listaTargetas.add(targeta);
+    listaImajenes.add(imagenFile);
   }
 
   void showColorPiker(

@@ -38,7 +38,7 @@ class Producto extends ModelAbs {
 
   @override
   deJsonAObj(Map<String, dynamic> json, {conIds = true}) {
-    print("${json['id_categoria']} + ${json['modelo']}");
+    print("ID: ${json['id_categoria']} , ${json['modelo']}");
     Producto producto = Producto();
     producto.id = json["id_producto"];
     if (conIds) {
